@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from account.models import User
+from account.models import Posts, User
 
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -33,3 +33,4 @@ class UserModelAdmin(BaseUserAdmin):
 
 # Now register the new UserModelAdmin...
 admin.site.register(User, UserModelAdmin)
+admin.site.register(Posts)

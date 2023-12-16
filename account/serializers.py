@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from account.models import User
+from account.models import Posts, User
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -11,12 +11,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
         
         
-    def validate(self, attrs):
-        password = attrs.get("password")
-        password2 = attrs.pop("password2")
+    def validate(self, data):
+        password = data.get("password")
+        password2 = data.pop("password2")
         if password != password2:
             raise serializers.ValidationError("Password must match")
-        return attrs
+        return data
     
     
     def create(self, validate_data):
@@ -52,3 +52,12 @@ class UserChangePasswordSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
         return attrs
+    
+    
+class PostsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Posts
+        fields = '__all__'
+    
+    def __str__(self):
+        return self.title
